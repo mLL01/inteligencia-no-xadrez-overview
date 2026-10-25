@@ -12,7 +12,7 @@ Chess.com OAuth access is being requested so players can authorize completed gam
 
 ## Demo content
 
-The chessboard and review panel are illustrative and contain no real account or game data. The repository contains no credentials, API keys, or user records.
+The chessboard and review panel are illustrative and contain no real account or game data. The square capybara logo is a crop of the platform's approved mascot artwork. The repository contains no credentials, API keys, or user records.
 
 ## Publish with GitHub Pages
 

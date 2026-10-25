@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f3efe4" />
     <meta name="description" content="A concise overview of Inteligência no Xadrez, where game review leads to personalized study and purposeful practice." />
     <title>Inteligência no Xadrez — Understand your game</title>
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/capybara-logo.png" type="image/png" />
     <style>
       :root {
         color-scheme: light;
@@ -45,12 +45,11 @@
         height: 44px;
         place-items: center;
         overflow: hidden;
-        border: 1.5px solid var(--ink);
         border-radius: 13px;
-        background: #f5b46b;
+        background: transparent;
         box-shadow: 0 3px 0 var(--ink);
       }
-      .brand-mascot { display: block; width: 100%; height: 100%; background-image: url("assets/capybara-expressions.png"); background-size: 400% 200%; background-position: 0 0; background-repeat: no-repeat; }
+      .brand-logo { display: block; width: 100%; height: 100%; object-fit: contain; }
       .brand-name { max-width: 150px; font-size: 15px; font-weight: 850; line-height: 1.05; letter-spacing: -.045em; }
       .nav { display: flex; align-items: center; gap: 27px; font-size: 13px; font-weight: 700; }
       .nav a { text-decoration: none; }
@@ -177,7 +176,7 @@
   <body>
     <header class="topbar wrap">
       <a class="brand" href="#top" aria-label="Inteligência no Xadrez — home">
-        <span class="brand-mark"><span class="brand-mascot" aria-hidden="true"></span></span>
+        <span class="brand-mark"><img class="brand-logo" src="assets/capybara-logo.png" alt="" /></span>
         <span class="brand-name">Inteligência<br />no Xadrez</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
