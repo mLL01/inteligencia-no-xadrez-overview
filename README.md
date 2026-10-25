@@ -1,14 +1,18 @@
-# Inteligência no Xadrez — OAuth overview
+# Inteligência no Xadrez — platform overview
 
-Public, static product overview prepared to explain the requested Chess.com OAuth use case. The page is written in English for reviewers and is deliberately separate from the private product repositories. Chess.com OAuth access is being requested; the page describes the intended use of a future authorized connection.
+This repository contains a short public overview of Inteligência no Xadrez. It is separate from the private product repositories and does not contain the application's source code.
 
-## Purpose
+## The platform
 
-Inteligência no Xadrez is an educational chess platform. If approved, the requested Chess.com connection would let a player authorize access to their own games so the platform can review those games and help them identify what to study. Players continue to play on Chess.com; the intended integration does not play games or submit moves.
+Inteligência no Xadrez helps players review their games, discover what to study, and practice with a clearer purpose. Its main learning loop is review, learn, and practice.
+
+## Chess.com connection
+
+Chess.com OAuth access is being requested so players can authorize completed games for review. The platform focuses on analysis and learning; it does not submit moves or replace Chess.com's playing experience.
 
 ## Demo content
 
-The chessboard and review panel on the page are illustrative. They contain no real player account, opponent, or game data. The page uses the platform's capybara mascot as a brand asset. It does not include the product's application source, credentials, API keys, or user records.
+The chessboard and review panel are illustrative and contain no real account or game data. The repository contains no credentials, API keys, or user records.
 
 ## Publish with GitHub Pages
 

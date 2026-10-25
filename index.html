@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f3efe4" />
-    <meta name="description" content="Inteligência no Xadrez helps chess players learn from their own games with personalized post-game analysis and focused training." />
-    <title>Inteligência no Xadrez — Learn from every game</title>
+    <meta name="description" content="A concise overview of Inteligência no Xadrez, where game review leads to personalized study and purposeful practice." />
+    <title>Inteligência no Xadrez — Understand your game</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <style>
       :root {
@@ -112,13 +112,6 @@
       .demo-foot strong { color: #fffaf0; }
       .mascot { width: 72px; height: 72px; flex: 0 0 72px; background-image: url("assets/capybara-expressions.png"); background-size: 400% 200%; background-position: 0 0; background-repeat: no-repeat; }
 
-      .proofline { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
-      .proof-item { min-height: 100px; display: flex; align-items: center; gap: 13px; padding: 20px 24px; }
-      .proof-item + .proof-item { border-left: 1px solid var(--line); }
-      .proof-icon { width: 36px; height: 36px; display: grid; flex: 0 0 36px; place-items: center; border: 1px solid var(--line); border-radius: 11px; background: var(--card); color: var(--coral-deep); font-size: 17px; }
-      .proof-item strong { display: block; font-size: 13px; }
-      .proof-item small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
-
       .section { padding: 88px 0; }
       .section-heading { max-width: 700px; margin-bottom: 34px; }
       h2 { margin: 11px 0 12px; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.04; letter-spacing: -.065em; }
@@ -132,25 +125,10 @@
       .step p { margin: 0; color: #5e5b52; font-size: 14px; line-height: 1.6; }
 
       .purpose { padding: 26px; border: 1.5px solid var(--ink); border-radius: 21px; background: #e6e1d2; box-shadow: 0 5px 0 var(--ink); }
-      .purpose-grid { display: grid; grid-template-columns: .78fr 1.22fr; gap: 38px; align-items: start; }
-      .purpose h2 { margin-top: 10px; }
-      .purpose-copy { color: #47453f; font-size: 15px; line-height: 1.7; }
-      .purpose-copy p { margin: 0 0 14px; }
-      .purpose-copy p:last-child { margin-bottom: 0; }
-      .promise-list { display: grid; gap: 10px; margin-top: 21px; }
-      .promise { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 750; line-height: 1.45; }
-      .promise-mark { display: grid; width: 20px; height: 20px; flex: 0 0 20px; place-items: center; border-radius: 50%; background: #d6e7d7; color: #246d45; font-size: 12px; }
-      .flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: center; gap: 8px; margin-top: 30px; padding: 17px; border: 1px solid #cbc4b2; border-radius: 14px; background: #f8f4ea; }
-      .flow-node { min-width: 0; text-align: center; }
-      .flow-node strong { display: block; font-size: 12px; }
-      .flow-node small { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.35; }
-      .flow-arrow { color: var(--coral-deep); text-align: center; font-size: 20px; }
-      .flow-icon { width: 30px; height: 30px; display: grid; place-items: center; margin: 0 auto 8px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); color: var(--coral-deep); font-size: 14px; }
-
-      .closing { display: flex; align-items: center; justify-content: space-between; gap: 34px; padding: 32px; border: 1.5px solid var(--ink); border-radius: 20px; background: var(--coral); box-shadow: 0 5px 0 var(--ink); }
-      .closing h2 { max-width: 620px; margin: 0; font-size: clamp(26px, 4vw, 42px); }
-      .closing p { margin: 9px 0 0; color: #3e2d27; font-size: 13px; line-height: 1.5; }
-      .closing .button { flex: 0 0 auto; background: var(--card); }
+      .purpose-summary .section-kicker { display: block; }
+      .purpose-row { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 32px; }
+      .purpose-row h2 { margin: 10px 0 0; font-size: clamp(25px, 3.4vw, 38px); }
+      .purpose-row p { margin: 0; color: #47453f; font-size: 14px; line-height: 1.7; }
       footer { display: flex; justify-content: space-between; gap: 20px; padding: 27px 0 33px; color: var(--muted); font-size: 11px; line-height: 1.5; }
       footer a { font-weight: 750; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
@@ -159,7 +137,7 @@
         .hero-copy { max-width: 680px; }
         .demo { width: min(100%, 620px); margin-inline: auto; }
         .proof-item { padding-inline: 14px; }
-        .purpose-grid { grid-template-columns: 1fr; gap: 15px; }
+        .purpose-row { grid-template-columns: 1fr; gap: 12px; }
       }
       @media (max-width: 600px) {
         .wrap { width: min(100% - 32px, 520px); }
@@ -183,17 +161,11 @@
         .square { font-size: clamp(19px, 7vw, 34px); }
         .mascot { width: 54px; height: 54px; flex-basis: 54px; }
         .demo-foot { font-size: 9px; }
-        .proofline { grid-template-columns: 1fr; }
-        .proof-item { min-height: 74px; padding: 13px 5px; }
-        .proof-item + .proof-item { border-top: 1px solid var(--line); border-left: 0; }
         .section { padding: 64px 0; }
         .steps { grid-template-columns: 1fr; }
         .step { min-height: 0; padding: 19px; }
         .step-top { margin-bottom: 20px; }
         .purpose { padding: 21px 17px; }
-        .flow { grid-template-columns: 1fr; gap: 8px; }
-        .flow-arrow { transform: rotate(90deg); }
-        .closing { align-items: flex-start; flex-direction: column; padding: 23px 19px; }
         footer { flex-direction: column; padding-bottom: 25px; }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -209,29 +181,28 @@
         <span class="brand-name">Inteligência<br />no Xadrez</span>
       </a>
       <nav class="nav" aria-label="Main navigation">
-        <a href="#how-it-works">How it works</a>
-        <a href="#purpose">Integration purpose</a>
-        <a class="nav-cta" href="#purpose">Chess.com OAuth overview <span aria-hidden="true">↗</span></a>
+        <a href="#how-it-works">The platform</a>
+        <a class="nav-cta" href="#purpose">Game connection <span aria-hidden="true">↘</span></a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero wrap" aria-labelledby="hero-title">
         <div>
-          <div class="eyebrow">A game review &amp; chess-learning tool</div>
-          <h1 id="hero-title">Keep playing on Chess.com.<br />Learn from <span>every game.</span></h1>
-          <p class="hero-copy"><strong>Inteligência no Xadrez</strong> helps players turn their own games into clear reviews and more focused practice. It complements chess platforms: players keep playing on Chess.com and use our tool to understand what happened afterward.</p>
+          <div class="eyebrow">A complete chess-learning platform</div>
+          <h1 id="hero-title">Understand your games.<br />Train what <span>matters next.</span></h1>
+          <p class="hero-copy"><strong>Inteligência no Xadrez</strong> helps players review their games, discover what to study, and practice with a clearer purpose.</p>
           <div class="actions">
-            <a class="button button-primary" href="#how-it-works">See how it works <span class="button-arrow" aria-hidden="true">→</span></a>
-            <a class="button button-secondary" href="#purpose">Why OAuth is needed</a>
+            <a class="button button-primary" href="#how-it-works">A quick overview <span class="button-arrow" aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="#purpose">Game connection</a>
           </div>
-          <p class="hero-note">An independent learning project. Not affiliated with or a replacement for Chess.com.</p>
+          <p class="hero-note">Study your chess in one place, while continuing to play on the platform you choose.</p>
         </div>
 
         <div class="demo" aria-label="Illustrative sample of a post-game review">
           <div class="demo-head">
-            <span class="demo-label">Game review · sample interface</span>
-            <span class="sample-tag">Illustrative data</span>
+            <span class="demo-label">Inside a game review</span>
+            <span class="sample-tag">Sample position</span>
           </div>
           <div class="demo-body">
             <div class="board" role="img" aria-label="Illustrative chessboard position with a highlighted move">
@@ -246,86 +217,53 @@
             </div>
             <div class="review-card">
               <div class="review-overline">A moment to learn from</div>
-              <h2 class="review-title">See what changed after your move.</h2>
-              <p class="review-copy">Review the position, compare continuations, and understand the idea behind a stronger choice.</p>
+              <h2 class="review-title">One game can show you what to practice next.</h2>
+              <p class="review-copy">Follow the moves, revisit key decisions, and compare your choice with a stronger continuation.</p>
               <div class="review-move">
-                <div><small>Played move · example</small><strong>5... Be7</strong></div>
+                <div><small>Position · sample game</small><strong>5... Be7</strong></div>
                 <span class="move-arrow" aria-hidden="true">↗</span>
               </div>
             </div>
           </div>
           <div class="demo-foot">
-            <span><strong>Sample position</strong> · no real account or game data</span>
+            <span><strong>Illustrative interface</strong> · sample board and move</span>
             <span class="mascot" role="img" aria-label="The platform's capybara coach"></span>
           </div>
         </div>
       </section>
 
-      <section class="proofline wrap" aria-label="Platform focus">
-        <div class="proof-item"><span class="proof-icon" aria-hidden="true">♟</span><span><strong>Your games, your learning</strong><small>Reviews start from games you played.</small></span></div>
-        <div class="proof-item"><span class="proof-icon" aria-hidden="true">⌕</span><span><strong>Understand key moments</strong><small>See where a decision changed the game.</small></span></div>
-        <div class="proof-item"><span class="proof-icon" aria-hidden="true">↗</span><span><strong>Practice with purpose</strong><small>Turn recurring patterns into study.</small></span></div>
-      </section>
-
       <section class="section wrap" id="how-it-works" aria-labelledby="how-title">
         <div class="section-heading">
-          <div class="section-kicker">A simple learning loop</div>
-          <h2 id="how-title">From a finished game to a clearer next move.</h2>
-          <p class="section-intro">The platform adds a learning layer after the game is over, so players can focus on decisions they can improve.</p>
+          <div class="section-kicker">The platform, in brief</div>
+          <h2 id="how-title">Three ways to make each game count.</h2>
+          <p class="section-intro">A simple cycle connects what you played with what you can learn next.</p>
         </div>
         <div class="steps">
           <article class="step">
-            <div class="step-top"><span class="step-number">01 / CONNECT</span><span class="step-symbol" aria-hidden="true">↗</span></div>
-            <h3>Choose your games</h3>
-            <p>If access is approved, players will be able to authorize a connection and choose games they want to understand better.</p>
+            <div class="step-top"><span class="step-number">01 / REVIEW</span><span class="step-symbol" aria-hidden="true">⌕</span></div>
+            <h3>Review</h3>
+            <p>Replay your games and revisit the decisions that mattered.</p>
           </article>
           <article class="step">
-            <div class="step-top"><span class="step-number">02 / REVIEW</span><span class="step-symbol" aria-hidden="true">⌕</span></div>
-            <h3>Understand key moments</h3>
-            <p>A post-game review walks through important decisions and compares the played move with stronger continuations.</p>
+            <div class="step-top"><span class="step-number">02 / LEARN</span><span class="step-symbol" aria-hidden="true">◎</span></div>
+            <h3>Learn</h3>
+            <p>Use your games to guide a personal study path and explore chess ideas.</p>
           </article>
           <article class="step">
             <div class="step-top"><span class="step-number">03 / PRACTICE</span><span class="step-symbol" aria-hidden="true">♘</span></div>
-            <h3>Build a useful habit</h3>
-            <p>Recurring patterns can guide focused chess study, helping players revisit ideas that matter in their own games.</p>
+            <h3>Practice</h3>
+            <p>Work on positions and themes, then follow your progress over time.</p>
           </article>
         </div>
       </section>
 
       <section class="section wrap" id="purpose" aria-labelledby="purpose-title">
-        <div class="purpose">
-          <div class="purpose-grid">
-            <div>
-              <div class="section-kicker">Chess.com OAuth access request · intended use</div>
-              <h2 id="purpose-title">To analyze games, with the player's permission.</h2>
-            </div>
-            <div class="purpose-copy">
-              <p>OAuth would let users connect their Chess.com account so Inteligência no Xadrez can retrieve the games needed for post-game analysis. The purpose is educational: help players understand their decisions and identify what to study next.</p>
-              <p>Chess.com remains the place where users play. This independent platform does not host Chess.com games, submit moves, or compete with Chess.com's playing experience.</p>
-              <div class="promise-list">
-                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>Access is requested to support analysis of a user's games.</span></div>
-                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>No playing or move submission through the integration.</span></div>
-                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>The player authorizes the connection through Chess.com.</span></div>
-              </div>
-            </div>
+        <div class="purpose purpose-summary">
+          <div class="section-kicker">Connected games</div>
+          <div class="purpose-row">
+            <h2 id="purpose-title">Chess.com is where you play.</h2>
+            <p>We are requesting account connection so players can bring completed games into their review. Inteligência no Xadrez focuses on analysis and learning; it does not submit moves or replace the playing experience.</p>
           </div>
-          <div class="flow" aria-label="The user plays on Chess.com, connects their account, and reviews the game on Inteligência no Xadrez">
-            <div class="flow-node"><span class="flow-icon" aria-hidden="true">♟</span><strong>Play</strong><small>On Chess.com</small></div>
-            <span class="flow-arrow" aria-hidden="true">→</span>
-            <div class="flow-node"><span class="flow-icon" aria-hidden="true">↗</span><strong>Authorize</strong><small>User-approved connection</small></div>
-            <span class="flow-arrow" aria-hidden="true">→</span>
-            <div class="flow-node"><span class="flow-icon" aria-hidden="true">⌕</span><strong>Learn</strong><small>Review on our platform</small></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="wrap" aria-label="Closing statement">
-        <div class="closing">
-          <div>
-            <h2>Chess.com is where the game happens. We help make the next one better.</h2>
-            <p>Independent educational software · Sample interface and position shown for demonstration.</p>
-          </div>
-          <a class="button" href="https://www.chess.com/clubs/about/chess-com-developer-community" target="_blank" rel="noreferrer">Chess.com Developer Community <span class="button-arrow" aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
