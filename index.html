@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3efe4" />
+    <meta name="description" content="Inteligência no Xadrez helps chess players learn from their own games with personalized post-game analysis and focused training." />
+    <title>Inteligência no Xadrez — Learn from every game</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f3efe4;
+        --card: #fffaf0;
+        --ink: #171714;
+        --muted: #6c6a60;
+        --line: #cfc7b4;
+        --coral: #ff704f;
+        --coral-deep: #bd341d;
+        --olive: #85816b;
+        --cream-square: #ddd8c6;
+        --shadow: 0 5px 0 var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--paper); color: var(--ink); }
+      a { color: inherit; }
+      .wrap { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+
+      .topbar {
+        min-height: 82px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
+      .brand-mark {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        overflow: hidden;
+        border: 1.5px solid var(--ink);
+        border-radius: 13px;
+        background: #f5b46b;
+        box-shadow: 0 3px 0 var(--ink);
+      }
+      .brand-mascot { display: block; width: 100%; height: 100%; background-image: url("assets/capybara-expressions.png"); background-size: 400% 200%; background-position: 0 0; background-repeat: no-repeat; }
+      .brand-name { max-width: 150px; font-size: 15px; font-weight: 850; line-height: 1.05; letter-spacing: -.045em; }
+      .nav { display: flex; align-items: center; gap: 27px; font-size: 13px; font-weight: 700; }
+      .nav a { text-decoration: none; }
+      .nav a:hover { color: var(--coral-deep); }
+      .nav .nav-cta { padding: 11px 15px; border: 1.5px solid var(--ink); border-radius: 11px; background: var(--card); box-shadow: 0 3px 0 var(--ink); }
+
+      .hero { display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: clamp(36px, 6vw, 80px); padding: 72px 0 76px; }
+      .eyebrow, .section-kicker { color: var(--coral-deep); font-size: 11px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+      h1 { max-width: 650px; margin: 15px 0 20px; font-size: clamp(44px, 6vw, 76px); line-height: .99; letter-spacing: -.075em; }
+      h1 span { position: relative; z-index: 0; white-space: nowrap; }
+      h1 span::after { position: absolute; z-index: -1; right: -8px; bottom: 1px; left: -8px; height: .59em; content: ""; transform: rotate(-1.7deg); border: 1.5px solid var(--ink); border-radius: 8px; background: var(--coral); box-shadow: 0 4px 0 var(--ink); }
+      .hero-copy { max-width: 550px; margin: 0; color: #45443e; font-size: 18px; line-height: 1.65; }
+      .hero-copy strong { color: var(--ink); }
+      .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 28px; }
+      .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 17px; border: 1.5px solid var(--ink); border-radius: 11px; box-shadow: var(--shadow); font-size: 13px; font-weight: 800; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+      .button:hover { transform: translateY(2px); box-shadow: 0 3px 0 var(--ink); }
+      .button-primary { background: var(--coral); }
+      .button-secondary { background: var(--card); }
+      .button-arrow { font-size: 18px; line-height: 0; }
+      .hero-note { margin-top: 20px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+      .demo {
+        position: relative;
+        padding: 18px;
+        border: 1.5px solid var(--ink);
+        border-radius: 22px;
+        background: #1b1b19;
+        box-shadow: 0 7px 0 var(--ink);
+        color: #fffaf0;
+      }
+      .demo-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+      .demo-label { color: #d4cbb7; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+      .sample-tag { padding: 6px 9px; border: 1px solid #716d60; border-radius: 999px; color: #ede4d2; font-size: 9px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+      .demo-body { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(175px, .92fr); align-items: stretch; gap: 16px; }
+      .board {
+        display: grid;
+        aspect-ratio: 1;
+        grid-template-columns: repeat(8, 1fr);
+        overflow: hidden;
+        border: 1px solid #b6ad98;
+        border-radius: 9px;
+        background: var(--cream-square);
+      }
+      .square { display: grid; position: relative; place-items: center; color: #171714; font-family: "Segoe UI Symbol", "Noto Sans Symbols 2", Georgia, serif; font-size: clamp(22px, 4vw, 43px); line-height: 1; }
+      .square.dark { background: var(--olive); }
+      .square.light { background: var(--cream-square); }
+      .square.marked::after { position: absolute; inset: 5px; content: ""; border: 3px solid var(--coral); border-radius: 7px; }
+      .square.last-move::before { position: absolute; inset: 0; content: ""; background: #f5d768; opacity: .38; }
+      .square > span { position: relative; z-index: 1; text-shadow: 0 1px 0 #fff7; }
+      .review-card { display: flex; flex-direction: column; gap: 12px; padding: 15px; border: 1px solid #545247; border-radius: 12px; background: #262622; }
+      .review-overline { color: #ff9a80; font-size: 9px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+      .review-title { margin: -7px 0 0; font-size: 17px; line-height: 1.2; letter-spacing: -.04em; }
+      .review-copy { margin: -5px 0 0; color: #dbd6c9; font-size: 12px; line-height: 1.5; }
+      .review-move { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding: 10px; border: 1px solid #4d4b40; border-radius: 9px; background: #30302a; }
+      .review-move small { display: block; margin-bottom: 4px; color: #b5b09f; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+      .review-move strong { color: #fffaf0; font-size: 14px; }
+      .move-arrow { color: var(--coral); font-size: 21px; }
+      .demo-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 13px; color: #d5cfbf; font-size: 10px; }
+      .demo-foot strong { color: #fffaf0; }
+      .mascot { width: 72px; height: 72px; flex: 0 0 72px; background-image: url("assets/capybara-expressions.png"); background-size: 400% 200%; background-position: 0 0; background-repeat: no-repeat; }
+
+      .proofline { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
+      .proof-item { min-height: 100px; display: flex; align-items: center; gap: 13px; padding: 20px 24px; }
+      .proof-item + .proof-item { border-left: 1px solid var(--line); }
+      .proof-icon { width: 36px; height: 36px; display: grid; flex: 0 0 36px; place-items: center; border: 1px solid var(--line); border-radius: 11px; background: var(--card); color: var(--coral-deep); font-size: 17px; }
+      .proof-item strong { display: block; font-size: 13px; }
+      .proof-item small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+
+      .section { padding: 88px 0; }
+      .section-heading { max-width: 700px; margin-bottom: 34px; }
+      h2 { margin: 11px 0 12px; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.04; letter-spacing: -.065em; }
+      .section-intro { max-width: 620px; margin: 0; color: #55534c; font-size: 16px; line-height: 1.65; }
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .step { min-height: 245px; display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--line); border-radius: 19px; background: var(--card); box-shadow: 0 4px 0 #d5cebc; }
+      .step-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 34px; }
+      .step-number { color: var(--coral-deep); font-size: 12px; font-weight: 850; letter-spacing: .13em; }
+      .step-symbol { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #f7e2d8; color: var(--coral-deep); font-size: 20px; }
+      .step h3 { margin: 0 0 9px; font-size: 20px; letter-spacing: -.045em; }
+      .step p { margin: 0; color: #5e5b52; font-size: 14px; line-height: 1.6; }
+
+      .purpose { padding: 26px; border: 1.5px solid var(--ink); border-radius: 21px; background: #e6e1d2; box-shadow: 0 5px 0 var(--ink); }
+      .purpose-grid { display: grid; grid-template-columns: .78fr 1.22fr; gap: 38px; align-items: start; }
+      .purpose h2 { margin-top: 10px; }
+      .purpose-copy { color: #47453f; font-size: 15px; line-height: 1.7; }
+      .purpose-copy p { margin: 0 0 14px; }
+      .purpose-copy p:last-child { margin-bottom: 0; }
+      .promise-list { display: grid; gap: 10px; margin-top: 21px; }
+      .promise { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 750; line-height: 1.45; }
+      .promise-mark { display: grid; width: 20px; height: 20px; flex: 0 0 20px; place-items: center; border-radius: 50%; background: #d6e7d7; color: #246d45; font-size: 12px; }
+      .flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: center; gap: 8px; margin-top: 30px; padding: 17px; border: 1px solid #cbc4b2; border-radius: 14px; background: #f8f4ea; }
+      .flow-node { min-width: 0; text-align: center; }
+      .flow-node strong { display: block; font-size: 12px; }
+      .flow-node small { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.35; }
+      .flow-arrow { color: var(--coral-deep); text-align: center; font-size: 20px; }
+      .flow-icon { width: 30px; height: 30px; display: grid; place-items: center; margin: 0 auto 8px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); color: var(--coral-deep); font-size: 14px; }
+
+      .closing { display: flex; align-items: center; justify-content: space-between; gap: 34px; padding: 32px; border: 1.5px solid var(--ink); border-radius: 20px; background: var(--coral); box-shadow: 0 5px 0 var(--ink); }
+      .closing h2 { max-width: 620px; margin: 0; font-size: clamp(26px, 4vw, 42px); }
+      .closing p { margin: 9px 0 0; color: #3e2d27; font-size: 13px; line-height: 1.5; }
+      .closing .button { flex: 0 0 auto; background: var(--card); }
+      footer { display: flex; justify-content: space-between; gap: 20px; padding: 27px 0 33px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+      footer a { font-weight: 750; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+      @media (max-width: 850px) {
+        .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 54px; }
+        .hero-copy { max-width: 680px; }
+        .demo { width: min(100%, 620px); margin-inline: auto; }
+        .proof-item { padding-inline: 14px; }
+        .purpose-grid { grid-template-columns: 1fr; gap: 15px; }
+      }
+      @media (max-width: 600px) {
+        .wrap { width: min(100% - 32px, 520px); }
+        .topbar { min-height: 70px; }
+        .brand-name { max-width: 130px; font-size: 13px; }
+        .brand-mark { width: 39px; height: 39px; }
+        .nav { gap: 12px; font-size: 11px; }
+        .nav a:not(.nav-cta) { display: none; }
+        .nav .nav-cta { padding: 9px 11px; }
+        .hero { gap: 29px; padding: 46px 0 50px; }
+        h1 { font-size: clamp(43px, 12vw, 64px); }
+        h1 span { display: inline-block; white-space: nowrap; }
+        .hero-copy { font-size: 16px; }
+        .demo { padding: 13px; border-radius: 17px; }
+        .demo-body { grid-template-columns: minmax(0, 1fr) minmax(120px, .86fr); gap: 9px; }
+        .review-card { gap: 9px; padding: 10px; }
+        .review-title { font-size: 14px; }
+        .review-copy { font-size: 10px; }
+        .review-move { padding: 7px; }
+        .review-move strong { font-size: 12px; }
+        .square { font-size: clamp(19px, 7vw, 34px); }
+        .mascot { width: 54px; height: 54px; flex-basis: 54px; }
+        .demo-foot { font-size: 9px; }
+        .proofline { grid-template-columns: 1fr; }
+        .proof-item { min-height: 74px; padding: 13px 5px; }
+        .proof-item + .proof-item { border-top: 1px solid var(--line); border-left: 0; }
+        .section { padding: 64px 0; }
+        .steps { grid-template-columns: 1fr; }
+        .step { min-height: 0; padding: 19px; }
+        .step-top { margin-bottom: 20px; }
+        .purpose { padding: 21px 17px; }
+        .flow { grid-template-columns: 1fr; gap: 8px; }
+        .flow-arrow { transform: rotate(90deg); }
+        .closing { align-items: flex-start; flex-direction: column; padding: 23px 19px; }
+        footer { flex-direction: column; padding-bottom: 25px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar wrap">
+      <a class="brand" href="#top" aria-label="Inteligência no Xadrez — home">
+        <span class="brand-mark"><span class="brand-mascot" aria-hidden="true"></span></span>
+        <span class="brand-name">Inteligência<br />no Xadrez</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#purpose">Integration purpose</a>
+        <a class="nav-cta" href="#purpose">Chess.com OAuth overview <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div>
+          <div class="eyebrow">A game review &amp; chess-learning tool</div>
+          <h1 id="hero-title">Keep playing on Chess.com.<br />Learn from <span>every game.</span></h1>
+          <p class="hero-copy"><strong>Inteligência no Xadrez</strong> helps players turn their own games into clear reviews and more focused practice. It complements chess platforms: players keep playing on Chess.com and use our tool to understand what happened afterward.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#how-it-works">See how it works <span class="button-arrow" aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="#purpose">Why OAuth is needed</a>
+          </div>
+          <p class="hero-note">An independent learning project. Not affiliated with or a replacement for Chess.com.</p>
+        </div>
+
+        <div class="demo" aria-label="Illustrative sample of a post-game review">
+          <div class="demo-head">
+            <span class="demo-label">Game review · sample interface</span>
+            <span class="sample-tag">Illustrative data</span>
+          </div>
+          <div class="demo-body">
+            <div class="board" role="img" aria-label="Illustrative chessboard position with a highlighted move">
+              <div class="square light"><span>♜</span></div><div class="square dark"><span>♞</span></div><div class="square light"><span>♝</span></div><div class="square dark"><span>♛</span></div><div class="square light"><span>♚</span></div><div class="square dark"><span>♝</span></div><div class="square light"><span>♞</span></div><div class="square dark"><span>♜</span></div>
+              <div class="square dark"><span>♟</span></div><div class="square light"><span>♟</span></div><div class="square dark"><span>♟</span></div><div class="square light"><span>♟</span></div><div class="square dark last-move"><span>♝</span></div><div class="square light"><span>♟</span></div><div class="square dark"><span>♟</span></div><div class="square light"><span>♟</span></div>
+              <div class="square light"><span>♟</span></div><div class="square dark"></div><div class="square light"><span>♞</span></div><div class="square dark"></div><div class="square light"></div><div class="square dark"><span>♞</span></div><div class="square light"></div><div class="square dark"></div>
+              <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"><span>♟</span></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div>
+              <div class="square light"><span>♗</span></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light marked"><span>♙</span></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div>
+              <div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"></div><div class="square dark"></div><div class="square light"><span>♘</span></div><div class="square dark"></div><div class="square light"></div>
+              <div class="square light"><span>♙</span></div><div class="square dark"><span>♙</span></div><div class="square light"><span>♙</span></div><div class="square dark"><span>♙</span></div><div class="square light"></div><div class="square dark"><span>♙</span></div><div class="square light"><span>♙</span></div><div class="square dark"><span>♙</span></div>
+              <div class="square dark"><span>♖</span></div><div class="square light"><span>♘</span></div><div class="square dark"><span>♗</span></div><div class="square light"><span>♕</span></div><div class="square dark"></div><div class="square light"><span>♖</span></div><div class="square dark"><span>♔</span></div><div class="square light"></div>
+            </div>
+            <div class="review-card">
+              <div class="review-overline">A moment to learn from</div>
+              <h2 class="review-title">See what changed after your move.</h2>
+              <p class="review-copy">Review the position, compare continuations, and understand the idea behind a stronger choice.</p>
+              <div class="review-move">
+                <div><small>Played move · example</small><strong>5... Be7</strong></div>
+                <span class="move-arrow" aria-hidden="true">↗</span>
+              </div>
+            </div>
+          </div>
+          <div class="demo-foot">
+            <span><strong>Sample position</strong> · no real account or game data</span>
+            <span class="mascot" role="img" aria-label="The platform's capybara coach"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="proofline wrap" aria-label="Platform focus">
+        <div class="proof-item"><span class="proof-icon" aria-hidden="true">♟</span><span><strong>Your games, your learning</strong><small>Reviews start from games you played.</small></span></div>
+        <div class="proof-item"><span class="proof-icon" aria-hidden="true">⌕</span><span><strong>Understand key moments</strong><small>See where a decision changed the game.</small></span></div>
+        <div class="proof-item"><span class="proof-icon" aria-hidden="true">↗</span><span><strong>Practice with purpose</strong><small>Turn recurring patterns into study.</small></span></div>
+      </section>
+
+      <section class="section wrap" id="how-it-works" aria-labelledby="how-title">
+        <div class="section-heading">
+          <div class="section-kicker">A simple learning loop</div>
+          <h2 id="how-title">From a finished game to a clearer next move.</h2>
+          <p class="section-intro">The platform adds a learning layer after the game is over, so players can focus on decisions they can improve.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="step-top"><span class="step-number">01 / CONNECT</span><span class="step-symbol" aria-hidden="true">↗</span></div>
+            <h3>Choose your games</h3>
+            <p>If access is approved, players will be able to authorize a connection and choose games they want to understand better.</p>
+          </article>
+          <article class="step">
+            <div class="step-top"><span class="step-number">02 / REVIEW</span><span class="step-symbol" aria-hidden="true">⌕</span></div>
+            <h3>Understand key moments</h3>
+            <p>A post-game review walks through important decisions and compares the played move with stronger continuations.</p>
+          </article>
+          <article class="step">
+            <div class="step-top"><span class="step-number">03 / PRACTICE</span><span class="step-symbol" aria-hidden="true">♘</span></div>
+            <h3>Build a useful habit</h3>
+            <p>Recurring patterns can guide focused chess study, helping players revisit ideas that matter in their own games.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section wrap" id="purpose" aria-labelledby="purpose-title">
+        <div class="purpose">
+          <div class="purpose-grid">
+            <div>
+              <div class="section-kicker">Chess.com OAuth access request · intended use</div>
+              <h2 id="purpose-title">To analyze games, with the player's permission.</h2>
+            </div>
+            <div class="purpose-copy">
+              <p>OAuth would let users connect their Chess.com account so Inteligência no Xadrez can retrieve the games needed for post-game analysis. The purpose is educational: help players understand their decisions and identify what to study next.</p>
+              <p>Chess.com remains the place where users play. This independent platform does not host Chess.com games, submit moves, or compete with Chess.com's playing experience.</p>
+              <div class="promise-list">
+                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>Access is requested to support analysis of a user's games.</span></div>
+                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>No playing or move submission through the integration.</span></div>
+                <div class="promise"><span class="promise-mark" aria-hidden="true">✓</span><span>The player authorizes the connection through Chess.com.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="flow" aria-label="The user plays on Chess.com, connects their account, and reviews the game on Inteligência no Xadrez">
+            <div class="flow-node"><span class="flow-icon" aria-hidden="true">♟</span><strong>Play</strong><small>On Chess.com</small></div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div class="flow-node"><span class="flow-icon" aria-hidden="true">↗</span><strong>Authorize</strong><small>User-approved connection</small></div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div class="flow-node"><span class="flow-icon" aria-hidden="true">⌕</span><strong>Learn</strong><small>Review on our platform</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap" aria-label="Closing statement">
+        <div class="closing">
+          <div>
+            <h2>Chess.com is where the game happens. We help make the next one better.</h2>
+            <p>Independent educational software · Sample interface and position shown for demonstration.</p>
+          </div>
+          <a class="button" href="https://www.chess.com/clubs/about/chess-com-developer-community" target="_blank" rel="noreferrer">Chess.com Developer Community <span class="button-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <span>© <span id="year">2026</span> Inteligência no Xadrez · Independent project, not affiliated with Chess.com.</span>
+      <a href="https://github.com/mLL01" target="_blank" rel="noreferrer">Project maintainer ↗</a>
+    </footer>
+  </body>
+</html>
